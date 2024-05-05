@@ -69,10 +69,14 @@ async def update_book(book_id: int, title: str=Form(...), author:str=Form(...), 
         get_book = my_storage.get_a_book_by_id(book_id)
         if not get_book:
             return None
-        get_book.title = title
-        get_book.author = author
-        get_book.isbn = isbn
-        get_book.year = year
+        if title:
+            get_book.title = title
+        if author:
+            get_book.author = author
+        if isbn:
+            get_book.isbn = isbn
+        if year:
+            get_book.year = year
         return {'New updated book': get_book}
     except Exception as er:
         return f'error occured at {er}'
