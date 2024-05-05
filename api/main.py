@@ -66,7 +66,7 @@ async def update_book(book_id: int, title: str=Form(...), author:str=Form(...), 
     get_book.author = author
     get_book.isbn = isbn
     get_book.year = year
-    return {'New created book': get_book}
+    return {'New updated book': get_book}
 @my_app.delete('/books/{book_id}', tags=['BOOKS'])
 async def del_book(book_id):
     """

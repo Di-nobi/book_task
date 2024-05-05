@@ -28,3 +28,7 @@ n/b replace {book_id} with a specifc number of a book out of the books created a
 ### DELETE A BOOK
 
 - curl -X DELETE http://localhost:8000/books/{book_id}
+
+### TO RUN UNITTESTS
+- cd into tests
+- run python3 -m unittest test_main.py
