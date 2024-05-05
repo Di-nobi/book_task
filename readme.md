@@ -3,7 +3,7 @@
 
 ## HOW TO RUN USING UVICORN (OPTIONAL)
 
-- run uvicorn api.main:app --reload
+- run uvicorn api.main:my_app --reload
 
 
 ### TO CREATE A BOOK USING CURL
