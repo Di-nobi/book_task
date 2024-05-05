@@ -13,10 +13,13 @@ async def all_books():
     Returns:
         A dictionary containing all the books
     """
-    list_books = []
-    for count in my_storage.all():
-        list_books.append(count)
-    return {'Books': list_books}
+    try:
+        list_books = []
+        for count in my_storage.all():
+            list_books.append(count)
+        return {'Books': list_books}
+    except Exception as er:
+        return f'Unable to get books from database {er}'
 
 @my_app.get('/books/{book_id}', tags=['BOOKS'])
 async def get_book(book_id: int):
@@ -29,10 +32,13 @@ async def get_book(book_id: int):
     Returns:
         A dictionary containing  the book
     """
-    book = my_storage.get_a_book_by_id(book_id)
-    if not book:
-        return f'This book dosent exist'
-    return {'book': book}
+    try:
+        book = my_storage.get_a_book_by_id(book_id)
+        if not book:
+            return f'This book dosent exist'
+        return {'book': book}
+    except Exception as er:
+        return f'Unable to get a book from database {er}'
 
 @my_app.post('/books', tags=['BOOKS'])
 async def create_book(books: dict):
@@ -59,14 +65,18 @@ async def update_book(book_id: int, title: str=Form(...), author:str=Form(...), 
     Returns:
         A dictionary containing  the new information of the book
     """
-    get_book = my_storage.get_a_book_by_id(book_id)
-    if not get_book:
-        return None
-    get_book.title = title
-    get_book.author = author
-    get_book.isbn = isbn
-    get_book.year = year
-    return {'New updated book': get_book}
+    try:
+        get_book = my_storage.get_a_book_by_id(book_id)
+        if not get_book:
+            return None
+        get_book.title = title
+        get_book.author = author
+        get_book.isbn = isbn
+        get_book.year = year
+        return {'New updated book': get_book}
+    except Exception as er:
+        return f'error occured at {er}'
+    
 @my_app.delete('/books/{book_id}', tags=['BOOKS'])
 async def del_book(book_id):
     """
@@ -78,8 +88,11 @@ async def del_book(book_id):
     Returns:
         A successfully deleted message
     """
-    get_book = my_storage.get_a_book_by_id(book_id)
-    if not get_book:
-        return None
-    my_storage.remove(get_book)
-    return {'message': 'Book deleted successfully'}
+    try:
+        get_book = my_storage.get_a_book_by_id(book_id)
+        if not get_book:
+            return None
+        my_storage.remove(get_book)
+        return {'message': 'Book deleted successfully'}
+    except Exception as er:
+        return f'error occured at {er}'
